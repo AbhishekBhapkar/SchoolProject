@@ -1,0 +1,9 @@
+
+
+
+School Project 
+    Students Table
+        StudentId 
+        StudentFirstName
+        StudentMiddleName
+        StudentLastName
