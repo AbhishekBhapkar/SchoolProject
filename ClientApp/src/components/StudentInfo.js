@@ -26,8 +26,8 @@ export class StudentInfo extends Component {
           </tr>
         </thead>
         <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.id}>
+          {forecasts.map(forecast =><tr key={forecast.id}>
+              <td>{forecast.id}</td>
               <td>{forecast.studentFirstName}</td>
               <td>{forecast.studentMiddleName}</td>
               <td>{forecast.studentLastName}</td>
@@ -47,7 +47,7 @@ export class StudentInfo extends Component {
 
     return (
       <div>
-        <h1 id="tableLabel">Weather forecast</h1>
+        <h1 id="tableLabel">Student Information</h1>
         <p>This component demonstrates fetching data from the server.</p>
         {contents}
       </div>
@@ -56,7 +56,12 @@ export class StudentInfo extends Component {
 
   async populateStudentData() {
     const response = await fetch('StudentInfo');
-    const data = await response.json();
+    let data = await response.json();
+    const jsonString = JSON.stringify(data); // Convert data to a JSON string
+    const trimmedJsonString = jsonString.slice(8, -1); // Remove the first 8 and last 1 characters
+    const trimmedData = JSON.parse(trimmedJsonString); // Convert the trimmed JSON string back to an object
+    console.log(trimmedData); // Output the trimmed data
+    data = trimmedData;
     this.setState({ forecasts: data, loading: false });
   }
 }
