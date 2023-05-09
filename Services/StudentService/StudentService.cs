@@ -26,5 +26,15 @@ namespace Demo2.Services.StudentService
             ServiceResponse.Data = dbStudents.Select(c => _mapper.Map<GetStudentsDto>(c)).ToList();
             return ServiceResponse; 
         }
+        public async Task<ServiceResponse<List<GetStudentsDto>>> AddStudent(AddStudentDto newStudentAdd)
+        {
+            var ServiceResponse = new ServiceResponse<List<GetStudentsDto>>();
+            var student = _mapper.Map<Students>(newStudentAdd);
+            //student.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
+            _context.Students.Add(student);
+            await _context.SaveChangesAsync();
+            return ServiceResponse;
+
+        }
     }
 }

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { UpdateForm } from './UpdateForm';
+
 
 export class StudentInfo extends Component {
   static displayName = StudentInfo.name;
@@ -11,6 +13,14 @@ export class StudentInfo extends Component {
   componentDidMount() {
     this.populateStudentData();
   }
+
+   handleDelete = () => {
+    UpdateForm.handleDeleteClick(this.state);
+  }
+
+   handleUpdate = () => {
+    UpdateForm.handleUpdateClick(this.state);
+  };
 
   static renderStudentsTable(forecasts) {
     return (
@@ -26,7 +36,8 @@ export class StudentInfo extends Component {
           </tr>
         </thead>
         <tbody>
-          {forecasts.map(forecast =><tr key={forecast.id}>
+          {forecasts.map((forecast) => (
+            <tr key={forecast.id}>
               <td>{forecast.id}</td>
               <td>{forecast.studentFirstName}</td>
               <td>{forecast.studentMiddleName}</td>
@@ -34,16 +45,22 @@ export class StudentInfo extends Component {
               <td>{forecast.classroom}</td>
               <td>{forecast.section}</td>
             </tr>
-          )}
+          ))}
         </tbody>
+        <button>Delete Record</button>
       </table>
     );
   }
 
   render() {
-    let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
-      : StudentInfo.renderStudentsTable(this.state.forecasts);
+    let contents = this.state.loading ? (
+      <p>
+        <em>Loading...</em>
+      </p>
+    ) : (
+        StudentInfo.renderStudentsTable(this.state.forecasts)
+        
+    );
 
     return (
       <div>
@@ -55,7 +72,7 @@ export class StudentInfo extends Component {
   }
 
   async populateStudentData() {
-    const response = await fetch('StudentInfo');
+    const response = await fetch("StudentInfo");
     let data = await response.json();
     const jsonString = JSON.stringify(data); // Convert data to a JSON string
     const trimmedJsonString = jsonString.slice(8, -1); // Remove the first 8 and last 1 characters

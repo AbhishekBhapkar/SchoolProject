@@ -22,5 +22,10 @@ namespace dotnet_rpg.Controllers
         {
             return Ok(await _StudentService.GetAllStudents());
         }
+    [HttpPost]
+        public async Task<ActionResult<ServiceResponse<List<GetStudentsDto>>>> AddStudent(AddStudentDto newStudent)
+        {
+            return Ok(await _StudentService.AddStudent(newStudent));
+        }
     }
 }

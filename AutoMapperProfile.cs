@@ -9,6 +9,7 @@ namespace GodProject
         public AutoMapperProfile()
         {
             CreateMap<Students,GetStudentsDto>();
+            CreateMap<AddStudentDto,Students>();
   
         }
     }
